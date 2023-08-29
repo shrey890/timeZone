@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Zones</title>
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .app-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
+  }
+
+  li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .country {
+    font-weight: bold;
+  }
+
+  .time {
+    font-size: 18px;
+  }
+</style>
+
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+
+    <script>
+      function App() {
+        const timeZones = [
+          { country: "United States", timeZone: "America/New_York" },
+          { country: "United Kingdom", timeZone: "Europe/London" },
+          { country: "India", timeZone: "Asia/Kolkata" },
+          { country: "Australia", timeZone: "Australia/Sydney" },
+          { country: "Japan", timeZone: "Asia/Tokyo" },
+          { country: "Brazil", timeZone: "America/Sao_Paulo" },
+          { country: "Canada", timeZone: "America/Toronto" },
+          { country: "Germany", timeZone: "Europe/Berlin" },
+          { country: "China", timeZone: "Asia/Shanghai" },
+          { country: "Russia", timeZone: "Europe/Moscow" },
+          { country: "South Africa", timeZone: "Africa/Johannesburg" },
+          { country: "Mexico", timeZone: "America/Mexico_City" },
+          { country: "South Korea", timeZone: "Asia/Seoul" },
+          { country: "France", timeZone: "Europe/Paris" },
+          { country: "Italy", timeZone: "Europe/Rome" },
+          { country: "Canada", timeZone: "America/Vancouver" },
+          { country: "Argentina", timeZone: "America/Argentina/Buenos_Aires" },
+          { country: "Saudi Arabia", timeZone: "Asia/Riyadh" },
+          { country: "Turkey", timeZone: "Europe/Istanbul" },
+          { country: "Spain", timeZone: "Europe/Madrid" },
+        ];
+
+        const [times, setTimes] = React.useState(
+          timeZones.map((tz) => ({
+            country: tz.country,
+            time: new Date().toLocaleTimeString("en-US", {
+              timeZone: tz.timeZone,
+            }),
+          }))
+        );
+
+        React.useEffect(function () {
+          const intervalId = setInterval(function () {
+            setTimes(
+              timeZones.map((tz) => ({
+                country: tz.country,
+                time: new Date().toLocaleTimeString("en-US", {
+                  timeZone: tz.timeZone,
+                }),
+              }))
+            );
+          }, 1000);
+
+          return () => clearInterval(intervalId);
+        }, []);
+
+        return React.createElement(
+          "div",
+          null,
+          React.createElement("header", null, "Hello React!"),
+          React.createElement(
+            "ul",
+            null,
+            times.map((item, index) =>
+              React.createElement(
+                "li",
+                { key: index },
+                `${item.country}: ${item.time}`
+              )
+            )
+          )
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(React.createElement(App));
+    </script>
+  </body>
+</html>
